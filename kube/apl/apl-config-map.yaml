@@ -1,0 +1,19 @@
+# Create a configmap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: apl-fila-config
+  labels:
+    app: apl-fila
+data:
+  DATASOURCE_INITIALIZATION_MODE: always
+  DATASOURCE_INITIALIZE: 'true'
+  DATASOURCE_CONTINUE_ON_ERROR: 'true'
+  HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
+  HIBERNATE_SHOW_SQL: 'true'
+  HIBERNATE_DDL_AUTO: update
+  SERVER_PORT: '9091'
+  PEDIDO_URL: http://acd652e434c7140808cb5801d25eea90-928075136.us-east-1.elb.amazonaws.com:9091/tech-challenge/pedidos
+  SERVLET_CONTEXT_PATH: /tech-challenge
+  FEIGN_CONNECT_TIMEOUT: '14000'
+  FEIGN_READ_TIMEOUT: '14000'
