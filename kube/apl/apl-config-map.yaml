@@ -17,3 +17,6 @@ data:
   SERVLET_CONTEXT_PATH: /tech-challenge
   FEIGN_CONNECT_TIMEOUT: '14000'
   FEIGN_READ_TIMEOUT: '14000'
+  SPRING_DB_URL: jdbc:postgresql://terraform-20240125200034485600000001.cbl56l2toixh.us-east-1.rds.amazonaws.com:5432/postgres
+  SPRING_DB_USER: postgres
+  SPRING_DB_PASS: postgres
