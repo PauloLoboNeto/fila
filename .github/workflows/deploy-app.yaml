@@ -19,7 +19,7 @@ jobs:
         run: docker build -t plobon/fiapfila:v1 .  --platform linux/amd64
       
       - name: Push Docker Image to Docker Hub
-        run: docker push plobon/fiapfila:v1
+        run: docker push plobon/fiapfila:v2
 
   deploy:
     runs-on: ubuntu-latest
