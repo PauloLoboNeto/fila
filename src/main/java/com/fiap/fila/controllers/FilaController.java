@@ -1,12 +1,9 @@
 package com.fiap.fila.controllers;
 
 import com.fiap.fila.adapters.FilaDTO;
-import com.fiap.fila.entities.ItemFila;
 import com.fiap.fila.interfaces.usecases.IFilaUseCasePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -26,19 +23,6 @@ public class FilaController {
 
     @Autowired
     private final IFilaUseCasePort filaUseCasePort;
-
-    @PostMapping("/clientes/{idCliente}/pedidos/{idPedido}")
-    public ResponseEntity<FilaDTO> inserirPedidoNaFila(
-            @PathVariable(name = "idPedido") UUID idPedido,
-            @PathVariable(name = "idCliente") UUID idCliente) {
-
-        var itemFila = ItemFila.builder()
-                .idPedido(idPedido)
-                .idCliente(idCliente)
-                .build();
-        var filaDTO = new FilaDTO().from(filaUseCasePort.inserirPedidoNaFila(itemFila));
-        return ResponseEntity.ok().body(filaDTO);
-    }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> concluirPedidoNaFila(@PathVariable(name = "id") UUID idPedido) {
