@@ -13,7 +13,7 @@ public class FilaPedidoListener {
 
     private final IFilaUseCasePort filaUseCasePort;
 
-    @SqsListener(queueNames = "${queue.fila.pedido}")
+    @SqsListener(queueNames = "${queue.fila.pedido}", factory = "defaultSqsListenerContainerFactory")
     public void listenNovosPedidos(FilaPedido message) {
                 var itemFila = ItemFila.builder()
                 .idPedido(message.getIdPedido())

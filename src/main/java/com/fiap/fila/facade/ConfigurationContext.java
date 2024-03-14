@@ -7,11 +7,15 @@ import com.fiap.fila.interfaces.gateways.IPedidoRepositoryPort;
 import com.fiap.fila.interfaces.usecases.IFilaUseCasePort;
 import com.fiap.fila.usecases.FilaUseCaseImpl;
 import io.awspring.cloud.sqs.config.SqsListenerConfigurer;
+import io.awspring.cloud.sqs.config.SqsMessageListenerContainerFactory;
+import io.awspring.cloud.sqs.listener.QueueNotFoundStrategy;
+import io.awspring.cloud.sqs.listener.acknowledgement.handler.AcknowledgementMode;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.util.MimeType;
+import software.amazon.awssdk.services.sqs.SqsAsyncClient;
 
 @Configuration
 public class ConfigurationContext {
@@ -42,6 +46,18 @@ public class ConfigurationContext {
                 converters.add(defaultConverter);
             });
         };
+    }
+
+    @Bean
+    SqsMessageListenerContainerFactory<Object> defaultSqsListenerContainerFactory(SqsAsyncClient sqsAsyncClient) {
+        return SqsMessageListenerContainerFactory
+                .builder()
+                .configure(options -> options
+                        .queueNotFoundStrategy(QueueNotFoundStrategy.FAIL)
+                        .acknowledgementMode(AcknowledgementMode.ALWAYS)
+                )
+                .sqsAsyncClient(sqsAsyncClient)
+                .build();
     }
 
 }
