@@ -19,6 +19,7 @@ import software.amazon.awssdk.services.sqs.SqsAsyncClient;
 
 @Configuration
 public class ConfigurationContext {
+
     @Bean
     public IFilaUseCasePort ifilaUseCasePort(IFilaRepositoryPort filaRepositoryPort, IPedidoRepositoryPort pedidoRepositoryPort) {
         return new FilaUseCaseImpl(filaRepositoryPort, pedidoRepositoryPort);

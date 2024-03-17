@@ -3,8 +3,10 @@ package com.fiap.fila.facade;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationPreparedEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.PropertiesPropertySource;
 import software.amazon.awssdk.regions.Region;
@@ -29,27 +31,26 @@ public class ListenerOfSecrets implements ApplicationListener<ApplicationPrepare
 
     @Override
     public void onApplicationEvent(ApplicationPreparedEvent event) {
+            String secretJson = getSecret();
 
-        String secretJson = getSecret();
+            String dbPassword = getString(secretJson, "password");
+            String dbUsername = getString(secretJson, "username");
+            String dbHost = getString(secretJson, "host");
+            String dbPort = getString(secretJson, "port");
+            String dbName = getString(secretJson, "dbname");
 
-        String dbPassword = getString(secretJson, "password");
-        String dbUsername = getString(secretJson, "username");
-        String dbHost = getString(secretJson, "host");
-        String dbPort = getString(secretJson, "port");
-        String dbName = getString(secretJson, "dbname");
-
-        ConfigurableEnvironment environment = event.getApplicationContext().getEnvironment();
-        Properties props = new Properties();
-        props.put(SPRING_DATASOURCE_PASSWORD, dbPassword);
-        props.put(SPRING_DATASOURCE_USERNAME, dbUsername);
-        props.put(SPRING_DATASOURCE_URL, "jdbc:postgresql://"
-                + dbHost
-                + ":"
-                + dbPort
-                + "/"
-                + dbName
-                + "?ssl=true&sslmode=require&rejectUnauthorized=false");
-        environment.getPropertySources().addFirst(new PropertiesPropertySource("aws.secret.manager", props));
+            ConfigurableEnvironment environment = event.getApplicationContext().getEnvironment();
+            Properties props = new Properties();
+            props.put(SPRING_DATASOURCE_PASSWORD, dbPassword);
+            props.put(SPRING_DATASOURCE_USERNAME, dbUsername);
+            props.put(SPRING_DATASOURCE_URL, "jdbc:postgresql://"
+                    + dbHost
+                    + ":"
+                    + dbPort
+                    + "/"
+                    + dbName
+                    + "?ssl=true&sslmode=require&rejectUnauthorized=false");
+            environment.getPropertySources().addFirst(new PropertiesPropertySource("aws.secret.manager", props));
     }
     public String getSecret() {
         SecretsManagerClient client = SecretsManagerClient.builder()
