@@ -53,7 +53,7 @@ public class ConfigurationContext {
         return SqsMessageListenerContainerFactory
                 .builder()
                 .configure(options -> options
-                        .queueNotFoundStrategy(QueueNotFoundStrategy.FAIL)
+                        .queueNotFoundStrategy(QueueNotFoundStrategy.CREATE)
                         .acknowledgementMode(AcknowledgementMode.ALWAYS)
                 )
                 .sqsAsyncClient(sqsAsyncClient)
