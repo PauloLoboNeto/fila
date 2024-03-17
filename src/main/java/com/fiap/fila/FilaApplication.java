@@ -7,8 +7,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 
 @SpringBootApplication
-@EnableFeignClients
-@ImportAutoConfiguration({FeignAutoConfiguration.class})
 public class FilaApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(FilaApplication.class, args);
