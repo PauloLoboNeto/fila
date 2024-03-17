@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: apl-fila
-          image: plobon/fiapfila:v2
+          image: plobon/fiapfila:v3
           imagePullPolicy: "Always"
           env:
             - name: spring.jpa.properties.hibernate.dialect
