@@ -75,20 +75,15 @@ spec:
                 configMapKeyRef:
                   name: apl-fila-config
                   key: FEIGN_READ_TIMEOUT
-            - name: spring.datasource.url
+            - name: queue.fila.pedido
               valueFrom:
                 configMapKeyRef:
-                  name: apl-fila-config
-                  key: SPRING_DB_URL
-            - name: spring.datasource.username
+                  name: apl-pedidos-config
+                  key: QUEUE_FILA_PEDIDO
+            - name: queue.update.pedido
               valueFrom:
                 configMapKeyRef:
-                  name: apl-fila-config
-                  key: SPRING_DB_USER
-            - name: spring.datasource.password
-              valueFrom:
-                configMapKeyRef:
-                  name: apl-fila-config
-                  key: SPRING_DB_PASS
+                  name: apl-pedidos-config
+                  key: QUEUE_UPDATE_PEDIDO
           ports:
             - containerPort: 9092
