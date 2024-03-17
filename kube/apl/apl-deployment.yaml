@@ -60,11 +60,6 @@ spec:
                 configMapKeyRef:
                   name: apl-fila-config
                   key: SERVLET_CONTEXT_PATH
-            - name: pedido.service.url
-              valueFrom:
-                configMapKeyRef:
-                  name: apl-fila-config
-                  key: PEDIDO_URL
             - name: feign.client.config.default.connectTimeout
               valueFrom:
                 configMapKeyRef:
